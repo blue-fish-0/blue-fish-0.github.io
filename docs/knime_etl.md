@@ -1,6 +1,16 @@
-# Project 1: Extract, Transform, Load (ETL) using KNIME and SQL Server
+# Extract, Transform, Load (ETL) using KNIME and SQL Server
+
+## Summary
 
 ![](images/project_1_diagram.png){width="1000"}
+
+!!! abstract ""
+    :fontawesome-solid-triangle-exclamation: **Problem:** The analytics team spent a lot of time cleaning the sales and inventory data that they received in Excel files every day. 
+
+    :material-lightbulb-on-10: **Solution:** I developed an Extract, Transform, Load (ETL) program to extract the data from the Excel files, transform the data, then load the transformed data into SQL Server.
+
+    :octicons-graph-16: **Results:** The analytics team can simply query data from SQL Server instead of wrangling data from thousands of Excel files. 
+    
 
 ## KNIME
 KNIME is a low-code alternative to a programming language where you can chain “nodes” to create programs. A node is like a function in a programming language. 

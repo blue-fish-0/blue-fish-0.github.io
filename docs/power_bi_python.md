@@ -1,6 +1,16 @@
-# Project 2: Creating Power BI reports using Python
+# Editing Power BI reports using Python
+
+## Summary
 
 ![](images/project_2_diagram.png){width="500"}
+
+!!! abstract ""
+    :fontawesome-solid-triangle-exclamation: **Problem:** The analytics team needed to create hundreds of Power BI report pages, each presenting the data of a different database query. 
+
+    :material-lightbulb-on-10: **Solution:** I wrote a Python script to automate the creation of the Power BI report pages from a template report page. 
+
+    :octicons-graph-16: **Results:** The Python script saved days of work for my team. Without the script, we would have had to manually create the report pages using the Power BI graphical user interface. 
+
 
 ## Power BI Projects (PBIP)
 A Power BI Project (PBIP) defines a Power BI report using a folder of plain text files. By using PBIPs, we can edit Power BI reports using a programming language, such as Python.     
@@ -50,7 +60,7 @@ I used the following Python packages:
 project_path = Path(r"") # paste the path to the Power BI project folder 
 pages_path = project_path / "project.Report" / "definition" / "pages"
 ```
-
+<br>
 **2.** Create a copy of the `template_page` folder named `page_1`. 
 
 ``` py title="add_pages_to_report.py"
@@ -67,7 +77,7 @@ copy_template_page("page_1")
 /// caption
 `project.Report/definition/pages`
 ///
-
+<br>
 **3.** Edit `page.json` to change the name of the new page from `template_page` to `page_1`.  
 
 ``` py title="add_pages_to_report.py"
@@ -87,18 +97,17 @@ edit_page_json("page_1")
 ```  
 
 === "before"
-    ``` json title="`project.Report/definition/pages/page_1/page.json`"
+    ``` json title="project.Report/definition/pages/page_1/page.json"
     "name": "template_page",
     "displayName": "template_page",
     ```
 
 === "after"
-    `project.Report/definition/pages/page_1/page.json`
-    ``` json
+    ``` json title="project.Report/definition/pages/page_1/page.json"
     "name": "page_1",
     "displayName": "page_1",
     ```
-
+<br>
 **4.** 	Edit `visual.json` to change the data displayed in the line graph from `template_table` to 
 `table_1`. I use a recursive function to assign `i.value = "table_1"` for all nested items `i` in `visual.json` such that  `i.key == "Entity"`.
 
@@ -130,14 +139,12 @@ edit_visual_json("page_1", "table_1")
 ```
 
 === "before"
-    `project.Report/definition/pages/page_1/visuals/line_graph/visual.json`
-    ``` json
+    ``` json title="project.Report/definition/pages/page_1/visuals/line_graph/visual.json"
     "Entity": "template_table",
     ```
 
 === "after"
-    `project.Report/definition/pages/page_1/visuals/line_graph/visual.json`
-    ``` json
+    ``` json title="project.Report/definition/pages/page_1/visuals/line_graph/visual.json"
     "Entity": "table_1",
     ```   
 
@@ -154,6 +161,3 @@ edit_visual_json("page_1", "table_1")
     /// caption
     `project.pbip`
     ///
-
-To simplify this example, I only created one report page. However, at work, I used Python 
-to automate the creation of hundreds of report pages. 
