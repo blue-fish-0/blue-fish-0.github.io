@@ -87,8 +87,7 @@ edit_page_json("page_1")
 ```  
 
 === "before"
-    `project.Report/definition/pages/page_1/page.json`
-    ``` json
+    ``` json title="`project.Report/definition/pages/page_1/page.json`"
     "name": "template_page",
     "displayName": "template_page",
     ```
