@@ -7,13 +7,13 @@
 !!! abstract ""
     :fontawesome-solid-triangle-exclamation: **Problem:** The analytics team spent a lot of time cleaning the sales and inventory data that they received in Excel files every day. 
 
-    :material-lightbulb-on-10: **Solution:** I developed an Extract, Transform, Load (ETL) program using KNIME. The program extracts the data from the Excel files, transform the data, then loads the transformed data into SQL Server.
+    :material-lightbulb-on-10: **Solution:** I used KNIME to develop an ETL program to extract the data from the Excel files, transform the data, then load the transformed data into SQL Server.
 
     :octicons-graph-16: **Results:** The analytics team can simply query data from SQL Server instead of wrangling data from thousands of Excel files. 
     
 
 ## KNIME
-KNIME is a low-code data processing application where you can chain “nodes” to create programs. A node is like a function in a programming language. 
+KNIME is a low-code data processing app where you can chain “nodes” to create programs. A node is like a function in a programming language. 
 
 ![](images/knime_screenshot.png){width="600"}
 /// caption
