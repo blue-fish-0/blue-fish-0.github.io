@@ -1,0 +1,573 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://sitename.example/knime_etl/">
+      
+      
+      
+        <link rel="next" href="../power_bi_python/">
+      
+      
+      <link rel="icon" href="../images/fish.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.5">
+    
+    
+      
+        <title>Extract, Transform, Load (ETL) using KNIME and SQL Server - blue-fish-0 portfolio</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.8608ea7d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#extract-transform-load-etl-using-knime-and-sql-server" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="blue-fish-0 portfolio" class="md-header__button md-logo" aria-label="blue-fish-0 portfolio" data-md-component="logo">
+      
+  <img src="../images/fish.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            blue-fish-0 portfolio
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Extract, Transform, Load (ETL) using KNIME and SQL Server
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="blue-fish-0 portfolio" class="md-nav__button md-logo" aria-label="blue-fish-0 portfolio" data-md-component="logo">
+      
+  <img src="../images/fish.svg" alt="logo">
+
+    </a>
+    blue-fish-0 portfolio
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Extract, Transform, Load (ETL) using KNIME and SQL Server
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Extract, Transform, Load (ETL) using KNIME and SQL Server
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#knime" class="md-nav__link">
+    <span class="md-ellipsis">
+      KNIME
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Definitions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pseudocode-of-the-etl-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pseudocode of the ETL program
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-execution-of-the-etl-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example execution of the ETL program
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power_bi_python/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Editing Power BI reports using Python
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#knime" class="md-nav__link">
+    <span class="md-ellipsis">
+      KNIME
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Definitions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pseudocode-of-the-etl-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pseudocode of the ETL program
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-execution-of-the-etl-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example execution of the ETL program
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="extract-transform-load-etl-using-knime-and-sql-server">Extract, Transform, Load (ETL) using KNIME and SQL Server</h1>
+<h2 id="summary">Summary</h2>
+<p><img alt="" src="../images/project_1_diagram.png" width="1000" /></p>
+<div class="admonition abstract">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7.2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8.2-40.1l216-368C228.7 39.5 241.8 32 256 32m0 128c-13.3 0-24 10.7-24 24v112c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24m32 224a32 32 0 1 0-64 0 32 32 0 1 0 64 0"/></svg></span> <strong>Problem:</strong> The analytics team spent a lot of time cleaning the sales and inventory data that they received in Excel files every day. </p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M1 11h3v2H1zm18.1-7.5L17 5.6 18.4 7l2.1-2.1zM11 1h2v3h-2zM4.9 3.5 3.5 4.9 5.6 7 7 5.6zM10 22c0 .6.4 1 1 1h2c.6 0 1-.4 1-1v-1h-4zm2-16c-3.3 0-6 2.7-6 6 0 2.2 1.2 4.2 3 5.2V19c0 .6.4 1 1 1h4c.6 0 1-.4 1-1v-1.8c1.8-1 3-3 3-5.2 0-3.3-2.7-6-6-6m1 9.9V17h-2v-1.1c-1.7-.4-3-2-3-3.9 0-2.2 1.8-4 4-4s4 1.8 4 4c0 1.9-1.3 3.4-3 3.9m7-4.9h3v2h-3z"/></svg></span> <strong>Solution:</strong> I used KNIME to develop an ETL program to extract the data from the Excel files, transform the data, then load the transformed data into SQL Server.</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.5 1.75V13.5h13.75a.75.75 0 0 1 0 1.5H.75a.75.75 0 0 1-.75-.75V1.75a.75.75 0 0 1 1.5 0m14.28 2.53-5.25 5.25a.75.75 0 0 1-1.06 0L7 7.06 4.28 9.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.25-3.25a.75.75 0 0 1 1.06 0L10 7.94l4.72-4.72a.75.75 0 0 1 1.042.018.75.75 0 0 1 .018 1.042"/></svg></span> <strong>Results:</strong> The analytics team can simply query data from SQL Server instead of wrangling data from thousands of Excel files. </p>
+</div>
+<h2 id="knime">KNIME</h2>
+<p>KNIME is a low-code data processing app where you can chain “nodes” to create programs. A node is like a function in a programming language. </p>
+<figure>
+<p><img alt="" src="../images/knime_screenshot.png" width="600" /></p>
+<figcaption>
+<p>Screenshot of KNIME.</p>
+</figcaption>
+</figure>
+<h2 id="definitions">Definitions</h2>
+<p><img alt="" src="../images/definitions.png" width="1000" /></p>
+<dl>
+<dt><code>f</code></dt>
+<dd>An Excel file containing sales and inventory data for one day. </dd>
+<dt><code>f.data</code></dt>
+<dd>The data table extracted from <code>f</code>. All columns in <code>f.data</code> are the string data type. </dd>
+<dt><code>T</code></dt>
+<dd>
+<p>A sequence of data transformations. These include:  </p>
+<ul>
+<li>Transforming column contents using regular expressions.  </li>
+<li>Converting column data types.  </li>
+</ul>
+</dd>
+<dt><code>T(f.data)</code></dt>
+<dd>The resulting table after applying <code>T</code> to <code>f.data</code>. </dd>
+<dt><code>all_data</code></dt>
+<dd>A database table that stores <code>T(f.data)</code> for every Excel file <code>f</code>.</dd>
+<dt><strong>match</strong></dt>
+<dd>A table <code>A</code> matches a table <code>B</code> if <code>A</code> and <code>B</code> have the same column names and data types.
+<code>T(f.data)</code> can only be loaded into <code>all_data</code> if <code>T(f.data)</code> matches <code>all_data</code>.</dd>
+<dt><code>L_all</code></dt>
+<dd>A list of all the Excel file names.</dd>
+<dt><code>L_loaded</code></dt>
+<dd>A list of the Excel file names <code>f.name</code> such that <code>T(f.data)</code> has been loaded into <code>all_data</code>. </dd>
+</dl>
+<h2 id="pseudocode-of-the-etl-program">Pseudocode of the ETL program</h2>
+<style>
+.code {
+    background-color: #f5f5f5; 
+}
+</style>
+
+<pre style="text-wrap:wrap">
+<b>Algorithm</b> ETL_program(<span class="code">L</span>):  
+    <b>Input:</b>   
+        <b><span class="code">L</span>:</b> A list of Excel file names.
+    <b>Output:</b> Nothing. 
+
+    <b>for</b> each Excel file name <span class="code">f.name</span> in <span class="code">L</span>:
+        <span class="code">f.data</span> = Extract the data table from <span class="code">f</span>.  
+        <span class="code">T(f.data)</span> = Apply each transformation in <span class="code">T</span> to <span class="code">f.data</span>. 
+        <b>try:</b>
+            Compare the column names and data types in <span class="code">T(f.data)</span> and 
+            <span class="code">all_data</span>. If <span class="code">T(f.data)</span> doesn’t match <span class="code">all_data</span>, raise an 
+            exception describing the mismatching columns.
+        <b>except</b> Exception as <span class="code">error</span>:
+            Print <span class="code">f"{f}: {error}"</span> (a formatted string).   
+        <b>else:</b>
+            <b>if</b> <span class="code">f.name</span> is not in <span class="code">L_loaded</span>: 
+                Load <span class="code">T(f.data)</span> into <span class="code">all_data</span>.
+                Append <span class="code">f.name</span> to <span class="code">L_loaded</span>.   
+</pre>
+<p><br>
+<code>(L_all − L_loaded)</code> is the list of the Excel file names <code>f.name</code> such that <code>T(f.data)</code> hasn't been 
+loaded into <code>all_data</code>. </p>
+<p>After executing <code>ETL_program(L_all - L_loaded)</code>, I execute the following steps manually:</p>
+<pre style="text-wrap:wrap">
+<b>while</b> <span class="code">(L_all - L_loaded)</span> is not empty:
+    <span class="code">f.name = (L_all - L_loaded)[0]</span>.
+        Execute <span class="code">ETL_program([f.name])</span>. 
+        Use the printed error message to update the data 
+        transformations in <span class="code">T</span>.
+    Execute <span class="code">ETL_program(L_all - L_loaded)</span>. 
+</pre>
+
+<h2 id="example-execution-of-the-etl-program">Example execution of the ETL program</h2>
+<dl>
+<dt><code>T</code>:</dt>
+<dd>
+<ol>
+<li>Convert <code>date</code> to the date data type.    </li>
+<li>Convert <code>column_a</code> to the integer data type.   </li>
+</ol>
+</dd>
+</dl>
+<p><strong>1. Execute <code>ETL_program([f_1.name])</code>:</strong>  </p>
+<figure>
+<p><img alt="" src="../images/etl_program_1.png" width="800" /></p>
+<figcaption>
+<p><code>T(f_1.data)</code> can't be loaded into <code>all_data</code> because <code>"missing"</code> in <code>column_a</code> can't be converted to an integer. </p>
+</figcaption>
+</figure>
+<p><strong>2. Update <code>T</code>:</strong>  </p>
+<dl>
+<dt><code>T</code>:</dt>
+<dd>
+<ol>
+<li>Convert <code>date</code> to the date data type.    </li>
+<li><span style="background-color:#d8f5e6">In <code>column_a</code>, replace all cells matching the regular expression <code>“^missing$”</code> with <code>null</code>.</span></li>
+<li>Convert <code>column_a</code> to the integer data type.</li>
+</ol>
+</dd>
+</dl>
+<p><strong>3. Execute <code>ETL_program([f_1.name])</code>:</strong>    </p>
+<figure>
+<p><img alt="" src="../images/etl_program_2.png" width="1000" /></p>
+<figcaption>
+<p>After updating <code>T</code>, <code>T(f_1.data)</code> is loaded into <code>all_data</code>.</p>
+</figcaption>
+</figure>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f1b6f286.min.js"></script>
+      
+    
+  </body>
+</html>
