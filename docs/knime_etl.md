@@ -5,7 +5,7 @@
 ![](images/project_1_diagram.png){width="1000"}
 
 !!! abstract ""
-    :fontawesome-solid-triangle-exclamation: **Problem:** The analytics team spent a lot of time cleaning the sales and inventory data that they received in Excel files every day. 
+    :fontawesome-solid-triangle-exclamation: **Problem:** The analytics team spent a lot of time cleaning the sales and inventory data that they received in Excel files every week. 
 
     :material-lightbulb-on-10: **Solution:** I used KNIME to develop an ETL program to extract the data from the Excel files, transform the data, then load the transformed data into SQL Server.
 
@@ -24,7 +24,7 @@ Screenshot of KNIME.
 ![](images/definitions.png){width="1000"}
 
 `f`
-:   An Excel file containing sales and inventory data for one day. 
+:   An Excel file containing sales and inventory data for one week. 
 
 `f.data`
 :   The data table extracted from `f`. All columns in `f.data` are the string data type. 
