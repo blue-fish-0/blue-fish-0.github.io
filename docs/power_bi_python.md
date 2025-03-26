@@ -50,7 +50,7 @@ Defines all the report pages in the Power BI report.
  ┣ 📂pages # (1)!
  ┃ ┣ 📂template_table
  ┃ ┃ ┣ 📂visuals
- ┃ ┃ ┃ ┗ 📂line_graph
+ ┃ ┃ ┃ ┗ 📂table_visual
  ┃ ┃ ┃ ┃ ┗ 📜visual.json # (2)!
  ┃ ┃ ┗ 📜page.json
 ```
@@ -65,6 +65,7 @@ I used the following Python packages:
 
 - :material-folder-outline: `pathlib` to represent filesystem paths. 
 - :material-content-copy: `shutil` to copy files and folders.
+- :material-regex: `re` to parse `.tmdl` files using regular expressions. 
 - :material-code-json: `json` to edit `.json` files. 
 - :material-shape-outline: `typing` to add type hints.    
 <br>
@@ -74,12 +75,62 @@ I used the following Python packages:
 ``` py title="add_pages_to_report.py"
 project_path = Path(r"") # paste the path to the Power BI project folder 
 pages_path = project_path / ".Report" / "definition" / "pages"
+tables_path = project_path / ".SemanticModel" / "definition" / "tables"
 
 new_table_name = "table_1"
 new_page_name = new_table_name
 ```
 <br>
-**2.** Create a copy of the `template_table` folder named `table_1`. 
+**2.** Extract the column names of each semantic model table from the `.tmdl` files. 
+
+``` py title="add_pages_to_report.py"
+def get_column_names() -> Dict[str, List[str]]:
+    table_name_to_column_names = dict()
+    for table_tmdl_path in tables_path.glob('*.tmdl'):
+        table_name = (re
+                      .search(r'.*\\(.*)\.tmdl$', str(table_tmdl_path))
+                      .group(1)
+                      )
+        with open(table_tmdl_path, 'r') as f:
+            table_tmdl_data = f.read()
+        column_names = re.findall(r'\n\tcolumn (.*)\n', table_tmdl_data)
+        table_name_to_column_names[table_name] = column_names
+    return table_name_to_column_names
+
+
+table_name_to_column_names = get_column_names()
+```
+
+=== "table_1.tmdl"
+    ``` title="project/.SemanticModel/definition/tables/table_1.tmdl"
+	column d
+		dataType: int64
+		formatString: 0
+		lineageTag: d8b5b183-7b7a-47a0-8219-211965773f6d
+		summarizeBy: none
+		sourceColumn: d
+
+		annotation SummarizationSetBy = User
+
+	column e
+		dataType: int64
+		formatString: 0
+		lineageTag: c55162d8-0445-42ef-9b16-236054053d6d
+		summarizeBy: none
+		sourceColumn: e
+
+		annotation SummarizationSetBy = User
+    ```
+
+=== "table_name_to_column_names"
+    ``` py 
+    {
+    'template_page': ['a', 'b', 'c'],
+    'table_1': ['d', 'e', 'f', 'g']
+    }
+    ```
+<br>
+**3.** Create a copy of the `template_table` folder named `table_1`. 
 
 ``` py title="add_pages_to_report.py"
 def copy_template_page(new_page_name: str) -> None:
@@ -102,18 +153,18 @@ copy_template_page(new_page_name)
     📂template_table
     ```
 <br>
-**3.** Edit `page.json` to change the name of the new report page from `template_table` to `table_1`.  
+**4.** Edit `page.json` to change the name of the new report page from `template_table` to `table_1`.  
 
 ``` py title="add_pages_to_report.py"
-def edit_page_json(new_page_name: str) -> None:
-    page_json = pages_path / new_page_name / "page.json"
-    with open(page_json, 'r') as f:
+def edit_page_json(page_name: str) -> None:
+    page_json_path = pages_path / page_name / "page.json"
+    with open(page_json_path, 'r') as f:
         page_json_data = json.load(f)
 
-    page_json_data['name'] = new_page_name
-    page_json_data['displayName'] = new_page_name
+    page_json_data['name'] = page_name
+    page_json_data['displayName'] = page_name
 
-    with open(page_json, 'w') as f:
+    with open(page_json_path, 'w') as f:
         json.dump(page_json_data, f, indent=4)
 
 
@@ -132,43 +183,88 @@ edit_page_json(new_page_name)
     "displayName": "table_1",
     ```
 <br>
-**4.** 	Edit `visual.json` to change the semantic model table displayed in the line graph from `template_table` to `table_1`. I use a recursive function to assign `i.value = "table_1"` for all nested items `i` in `visual.json` such that  `i.key == "Entity"`.
+**5.** 	Edit `visual.json` to present the columns from `table_1` instead of the columns from `template_table`. 
 
 ``` py title="add_pages_to_report.py"
-def update_dict(dictionary, search_key: Hashable, new_value: Any) -> None:
-    for key, value in dictionary.items():
-        if key == search_key:
-            dictionary[key] = new_value
-        elif isinstance(value, dict):
-            update_dict(value, search_key, new_value)
-        elif isinstance(value, list):
-            for element in value:
-                if isinstance(element, dict):
-                    update_dict(element, search_key, new_value)
+visual_json_column_template = ({
+    "field": {
+        "Column": {
+            "Expression": {
+                "SourceRef": {
+                    "Entity": "table_name"
+                }
+            },
+            "Property": "column_name"
+        }
+    },
+    "queryRef": "table_name.column_name",
+    "nativeQueryRef": "column_name"
+})
 
 
-def edit_visual_json(new_page_name: str, new_table_name: str) -> None:
-    visual_json = pages_path / new_page_name / "visuals" / "line_graph" / "visual.json"
-    with open(visual_json, 'r') as f:
+def create_visual_json_columns(table_name: str) -> str:
+    visual_json_columns = []
+    for column_name in table_name_to_column_names[table_name]:
+        visual_json_column = copy.deepcopy(visual_json_column_template)
+        (visual_json_column['field']['Column']['Expression']
+         ['SourceRef']['Entity']) = table_name
+        visual_json_column['field']['Column']['Property'] = column_name
+        visual_json_column['queryRef'] = f'{table_name}.{column_name}'
+        visual_json_column['nativeQueryRef'] = column_name
+        visual_json_columns.append(visual_json_column)
+    return visual_json_columns
+
+
+def edit_visual_json(page_name: str, table_name: str) -> None:
+    visual_json_path = (pages_path / page_name /
+                        "visuals" / "table_visual" / "visual.json")
+    with open(visual_json_path, 'r') as f:
         visual_json_data = json.load(f)
 
-    update_dict(visual_json_data, "Entity", new_table_name)
+    (visual_json_data['visual']['query']['queryState']['Values']
+     ['projections']) = create_visual_json_columns(table_name)
 
-    with open(visual_json, 'w') as f:
+    with open(visual_json_path, 'w') as f:
         json.dump(visual_json_data, f, indent=4)
 
 
-edit_visual_json("new_page_name", "new_table_name")
+edit_visual_json(new_page_name, new_table_name))
 ```
 
 === "before"
     ``` json title="project/.Report/definition/pages/table_1/visuals/line_graph/visual.json"
-    "Entity": "template_table",
+    {
+        "field": {
+            "Column": {
+                "Expression": {
+                    "SourceRef": {
+                        "Entity": "template_table"
+                    }
+                },
+            "Property": "a"
+            }
+        },
+    "queryRef": "template_table.a",
+    "nativeQueryRef": "a"
+    },
     ```
 
 === "after"
     ``` json title="project/.Report/definition/pages/table_1/visuals/line_graph/visual.json"
-    "Entity": "table_1",
+    {
+        "field": {
+            "Column": {
+                "Expression": {
+                    "SourceRef": {
+                        "Entity": "table_1"
+                    }
+                },
+            "Property": "d"
+            }
+        },
+    "queryRef": "table_1.d",
+    "nativeQueryRef": "d"
+    },
     ```   
 
 ## New report pages
