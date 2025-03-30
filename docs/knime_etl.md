@@ -72,7 +72,7 @@ Screenshot of KNIME.
             <span class="code">all_data</span>. If <span class="code">T(f.data)</span> doesn’t match <span class="code">all_data</span>, raise an 
             exception describing the mismatching columns.
 	    <b>except</b> Exception as <span class="code">error</span>:
-	        Print <span class="code">f"{f}: {error}"</span> (a formatted string).   
+	        Print <span class="code">f"{f.name}: {error}"</span> (a formatted string).   
 	    <b>else:</b>
             <b>if</b> <span class="code">f.name</span> is not in <span class="code">L_loaded</span>: 
 	            Load <span class="code">T(f.data)</span> into <span class="code">all_data</span>.
