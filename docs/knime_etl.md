@@ -39,7 +39,7 @@ Screenshot of KNIME.
 :   The resulting table after applying `T` to `f.data`. 
 
 `all_data`
-:   A database table that stores `T(f.data)` for every Excel file `f`.
+:   A database table that will store `T(f.data)` for every Excel file `f`.
 
 **match**
 :   A table `A` matches a table `B` if `A` and `B` have the same column names and data types.
@@ -51,7 +51,7 @@ Screenshot of KNIME.
 `loaded_file_names`
 :   A set of the Excel file names `f.name` such that `T(f.data)` has been loaded into `all_data`. 
 
-## Pseudocode of the ETL program
+## Pseudocode of the ETL program (similar to Python)
 <style>
 .code {
     background-color: #f5f5f5; 
@@ -65,7 +65,7 @@ Screenshot of KNIME.
     <b>Output:</b> A dictionary of (file name, error message) items. 
 
     <span class="code">not_loaded_file_names</span> = <span class="code">file_names</span> − <span class="code">loaded_file_names</span>. 
-    <span class="code">file_name_to_error_message</span> = <span class="code">{}</span> (an empty dictionary).  
+    <span class="code">file_name_to_error_message</span> = <span class="code">dict()</span>.
 
     <b>for</b> each Excel file name <span class="code">f.name</span> in <span class="code">not_loaded_file_names</span>:
 	    <span class="code">f.data</span> = Extract the data table from <span class="code">f</span>.  
@@ -85,7 +85,7 @@ After executing `file_name_to_error_message = ETL_program(all_file_names)`, I ex
 <pre>
 <b>for</b> <span class="code">f.name</span>, <span class="code">error_message</span> in <span class="code">file_name_to_error_message.items()</span>:
     Use <span class="code">error_message</span> to update the data transformations in <span class="code">T</span>. 
-    Execute <span class="code">ETL_program(f.name)</span>. 
+    Execute <span class="code">ETL_program(set(f.name))</span>. 
 </pre>
 
 
@@ -95,7 +95,7 @@ After executing `file_name_to_error_message = ETL_program(all_file_names)`, I ex
 :   1. Convert `date` to the date data type.    
     2. Convert `column_a` to the integer data type.   
 
-**1. Execute `ETL_program([f_1.name])`:**  
+**1. Execute `ETL_program(set(f_1.name))`:**  
 
 ![](images/etl_program_1.png){width="800"}
 /// caption
@@ -109,7 +109,7 @@ After executing `file_name_to_error_message = ETL_program(all_file_names)`, I ex
     2. <span style="background-color:#d8f5e6">In `column_a`, replace all cells matching the regular expression `“^missing$”` with `null`.</span>
     3. Convert `column_a` to the integer data type.
 
-**3. Execute `ETL_program([f_1.name])`:**    
+**3. Execute `ETL_program(set(f_1.name))`:**    
 
 ![](images/etl_program_2.png){width="1000"}
 /// caption
