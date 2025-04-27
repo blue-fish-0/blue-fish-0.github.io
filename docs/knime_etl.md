@@ -13,7 +13,7 @@
     
 
 ## KNIME
-KNIME is a low-code data processing app where you can chain “nodes” to create programs. A node is like a function in a programming language. 
+KNIME is a low-code data processing application where you can chain “nodes” to create programs. A node is like a function in a programming language. 
 
 ![](images/knime_screenshot.png){width="600"}
 /// caption
@@ -45,11 +45,11 @@ Screenshot of KNIME.
 :   A table `A` matches a table `B` if `A` and `B` have the same column names and data types.
     `T(f.data)` can only be loaded into `all_data` if `T(f.data)` matches `all_data`.
 
-`L_all`
-:   A list of all the Excel file names.
+`all_file_names`
+:   A set of all the Excel file names.
 
-`L_loaded`
-:   A list of the Excel file names `f.name` such that `T(f.data)` has been loaded into `all_data`. 
+`loaded_file_names`
+:   A set of the Excel file names `f.name` such that `T(f.data)` has been loaded into `all_data`. 
 
 ## Pseudocode of the ETL program
 <style>
@@ -59,37 +59,33 @@ Screenshot of KNIME.
 </style>
 
 <pre>
-<b>Algorithm</b> ETL_program(<span class="code">L</span>):  
+<b>Algorithm</b> ETL_program(<span class="code">file_names</span>):  
     <b>Input:</b>   
-        <b><span class="code">L</span>:</b> A list of Excel file names.
-    <b>Output:</b> Nothing. 
+        <span class="code">file_names</span>: A set of Excel file names.
+    <b>Output:</b> A dictionary of (file name, error message) items. 
 
-	<b>for</b> each Excel file name <span class="code">f.name</span> in <span class="code">L</span>:
+    <span class="code">not_loaded_file_names</span> = <span class="code">file_names</span> − <span class="code">loaded_file_names</span>. 
+    <span class="code">file_name_to_error_message</span> = <span class="code">{}</span> (an empty dictionary).  
+
+    <b>for</b> each Excel file name <span class="code">f.name</span> in <span class="code">not_loaded_file_names</span>:
 	    <span class="code">f.data</span> = Extract the data table from <span class="code">f</span>.  
-	    <span class="code">T(f.data)</span> = Apply each transformation in <span class="code">T</span> to <span class="code">f.data</span>. 
         <b>try:</b>
-	        Compare the column names and data types in <span class="code">T(f.data)</span> and 
-            <span class="code">all_data</span>. If <span class="code">T(f.data)</span> doesn’t match <span class="code">all_data</span>, raise an 
-            exception describing the mismatching columns.
+            <span class="code">T(f.data)</span> = Apply each transformation in <span class="code">T</span> to <span class="code">f.data</span>. 
+	        Load <span class="code">T(f.data)</span> into <span class="code">all_data</span>.
 	    <b>except</b> Exception as <span class="code">error</span>:
-	        Print <span class="code">f"{f.name}: {error}"</span> (a formatted string).   
-	    <b>else:</b>
-            <b>if</b> <span class="code">f.name</span> is not in <span class="code">L_loaded</span>: 
-	            Load <span class="code">T(f.data)</span> into <span class="code">all_data</span>.
-	            Append <span class="code">f.name</span> to <span class="code">L_loaded</span>.   
+	        <span class="code">file_name_to_error_message[f.name]</span> = <span class="code">str(error)</span>.   
+	    <b>else:</b> 
+	        Add <span class="code">f.name</span> to <span class="code">loaded_file_names</span>.
+        
+    <b>return</b> <span class="code">file_name_to_error_message</span>.
+
 </pre>
 <br>
-`(L_all − L_loaded)` is the list of the Excel file names `f.name` such that `T(f.data)` hasn't been 
-loaded into `all_data`. 
-
-After executing `ETL_program(L_all - L_loaded)`, I execute the following steps manually:
+After executing `file_name_to_error_message = ETL_program(all_file_names)`, I execute the following steps manually:
 <pre>
-<b>while</b> <span class="code">(L_all - L_loaded)</span> is not empty:
-    <span class="code">f.name = (L_all - L_loaded)[0]</span>.
-        Execute <span class="code">ETL_program([f.name])</span>. 
-        Use the printed error message to update the data 
-        transformations in <span class="code">T</span>.
-    Execute <span class="code">ETL_program(L_all - L_loaded)</span>. 
+<b>for</b> <span class="code">f.name</span>, <span class="code">error_message</span> in <span class="code">file_name_to_error_message.items()</span>:
+    Use <span class="code">error_message</span> to update the data transformations in <span class="code">T</span>. 
+    Execute <span class="code">ETL_program(f.name)</span>. 
 </pre>
 
 
