@@ -1,4 +1,4 @@
-# Extract, Transform, Load (ETL) using KNIME and SQL Server
+# Automating Tilray's weekly ETL using KNIME and SQL Server
 
 ## Summary
 
