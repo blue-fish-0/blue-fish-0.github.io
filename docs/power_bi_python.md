@@ -1,4 +1,4 @@
-# Creating Power BI report pages using Python
+# Creating Tilray's Power BI reports using Python
 
 ## Summary
 
