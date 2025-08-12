@@ -9,7 +9,7 @@
 
     :material-lightbulb-on-10: **Solution:** I used KNIME to develop an ETL program to extract the data from the Excel files, transform the data, then load the transformed data into SQL Server. The analytics team could then import the transformed data from SQL Server into Power BI.
 
-    :octicons-graph-16: **Results:** The analytics team's Power BI report data refreshes became 80% faster, since the data transformations were completed before importing into Power Query, instead of in Power Query.
+    :octicons-graph-16: **Results:** The analytics team's Power BI report data refreshes became 80% faster.
     
 
 ## KNIME
