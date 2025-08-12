@@ -4,6 +4,8 @@ site_url: https://sitename.example
 nav:
   - 'knime_etl.md'
   - 'power_bi_python.md'
+  - 'classification_mushroom_edibility.md'
+  - 'linear_regression_house_prices.md'
 
 theme:
     name: material
