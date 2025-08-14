@@ -2,7 +2,7 @@
 
 ## Summary
 
-![](images/project_2_diagram.png){width="500"}
+![](images/power_bi_python/project_diagram.png){width="500"}
 
 !!! abstract ""
     :fontawesome-solid-triangle-exclamation: **Problem:** The analytics team needed to create hundreds of Power BI report pages, each presenting the result of a different database query. 
@@ -37,7 +37,7 @@ A Power BI report such that changes made to the `.Report` and `.SemanticModel` f
 
 I used the Power BI GUI to create a `template_table` report page, which presents the data from the `template_table` semantic model table. The `template_table` report page defines the appearance of the report pages that the Python script will create.  
 
-![](images/pbip_before.png){width="900"}
+![](images/power_bi_python/pbip_before.png){width="900"}
 /// caption
 `project.pbip`
 ///
@@ -270,13 +270,13 @@ edit_visual_json(new_page_name, new_table_name))
 ## New report pages
 
 === "before"
-    ![](images/pbip_before.png){width="900"}
+    ![](images/power_bi_python/pbip_before.png){width="900"}
     /// caption
     `project.pbip`
     ///
 
 === "after"
-    ![](images/pbip_after.png){width="900"}
+    ![](images/power_bi_python/pbip_after.png){width="900"}
     /// caption
     `project.pbip`
     ///

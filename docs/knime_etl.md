@@ -2,7 +2,7 @@
 
 ## Summary
 
-![](images/project_1_diagram.png){width="1000"}
+![](images/knime_etl/project_diagram.png){width="1000"}
 
 !!! abstract ""
     :fontawesome-solid-triangle-exclamation: **Problem:** Every week, the analytics team used Power Query to transform and import new sales and inventory data (stored in over 30 Excel files) into their Power BI reports. After a few years, the Power BI report data refreshes became very slow, because Power Query was transforming data from thousands of Excel files during each data refresh.
@@ -15,13 +15,13 @@
 ## KNIME
 KNIME is a low-code data processing application where you can chain “nodes” to create programs. A node is like a function in a programming language. 
 
-![](images/knime_screenshot.png){width="600"}
+![](images/knime_etl/knime_screenshot.png){width="600"}
 /// caption
 Screenshot of KNIME.
 ///
 
 ## Definitions
-![](images/definitions.png){width="1000"}
+![](images/knime_etl/definitions.png){width="1000"}
 
 `f`
 :   An Excel file containing sales and inventory data for one week. 
@@ -97,7 +97,7 @@ After executing `file_name_to_error_message = ETL_program(all_file_names)`, I ex
 
 **1. Execute `ETL_program(set(f_1.name))`:**  
 
-![](images/etl_program_1.png){width="800"}
+![](images/knime_etl/etl_program_1.png){width="800"}
 /// caption
 `T(f_1.data)` can't be loaded into `all_data` because `"missing"` in `column_a` can't be converted to an integer. 
 ///
@@ -111,7 +111,7 @@ After executing `file_name_to_error_message = ETL_program(all_file_names)`, I ex
 
 **3. Execute `ETL_program(set(f_1.name))`:**    
 
-![](images/etl_program_2.png){width="1000"}
+![](images/knime_etl/etl_program_2.png){width="1000"}
 /// caption
 After updating `T`, `T(f_1.data)` is loaded into `all_data`.
 ///
