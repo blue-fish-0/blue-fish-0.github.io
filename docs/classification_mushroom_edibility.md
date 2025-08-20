@@ -9,7 +9,7 @@
 
 
 ## R Code
-<font size="5"> :simple-r: [Link to R code](https://www.google.ca){target="_blank"} </font>
+<font size="5"> :simple-r: [Link to R code](https://html-preview.github.io/?url=https://github.com/blue-fish-0/blue-fish-0.github.io/blob/main/code%20notebooks/R_code_for_mushroom_edibility_classification_project.html){target="_blank"} </font>
 
 ## Dataset Description
 The dataset describes 1,000 mushrooms, each of which is either poisonous or edible. All the 9 predictors are categorical, and are described in the table below.
