@@ -88,12 +88,11 @@ penalizes the coefficient magnitudes more.
 
 
 ### Random forest
-A decision tree splits the predictor space into regions using recursive binary splitting, and each region is assigned a predicted class. Since a single decision tree has high variance, a random forest returns the average of a set of classification trees, where each tree is trained on a bootstrap sample of the training set. To decrease the correlation between the trees, each split only considers a subset of the predictors. The probability of being poisonous is
-the proportion of trees that predict poisonous. 
+A decision tree splits the predictor space into regions using recursive binary splitting, and each region is assigned a predicted class. Since a single decision tree has high variance, a random forest returns the average of a set of classification trees, where each tree is trained on a bootstrap sample of the training set. To decrease the correlation between the trees, each split only considers a subset of the predictors. 
 $$
-p(\boldsymbol{x}) = \frac{1}{B}\sum_{b=1}^{B}\hat{f}^b(\boldsymbol{x})
+p(\boldsymbol{x}) = \frac{1}{B}\sum_{b=1}^{B}\hat{y}^b(\boldsymbol{x})
 $$
-where $p(\boldsymbol{x})$ is the probability that mushroom $\boldsymbol{x}$ is poisonous, $B$ is the number of trees, and $\hat{f}^b(\boldsymbol{x})$ equals 1 or 0 (1 if the random forest trained on bootstrap sample $b$ predicts the mushroom $\boldsymbol{x}$ to be poisonous, 0 otherwise).
+where $p(\boldsymbol{x})$ is the probability that mushroom $\boldsymbol{x}$ is poisonous, $B$ is the number of trees, and $\hat{y}^b(\boldsymbol{x})$ equals 1 or 0 (1 if the random forest trained on bootstrap sample $b$ predicts  $\boldsymbol{x}$ to be poisonous, 0 otherwise).
 
 ![](images/mushroom_classification/random_forest_grid_search.png){width="600"}
 /// caption
@@ -105,10 +104,17 @@ $\mathrm{mtry}$.
 
 ### k-NN 
 k-Nearest Neighbors (k-NN) is a non-parametric method, meaning it makes no
-assumptions about the shape of the decision boundary. k-NN classifies each observation using
-the target variable categories of its $k$ nearest training set observations in the predictor space. A
-larger $k$ will return a smoother decision boundary. The probability of being poisonous is the
-proportion of neighbors that are poisonous.
+assumptions about the shape of the decision boundary. k-NN classifies each mushroom $\boldsymbol{x}$ using
+the edibilities of the $k$ nearest training set mushrooms to $\boldsymbol{x}$ in the predictor space. A
+larger $k$ will return a smoother decision boundary.   
+
+$$
+p(\boldsymbol{x}) = \frac{1}{k}\sum_{\boldsymbol{x}_j\in K(\boldsymbol{x})}^{} y(\boldsymbol{x}_j)
+$$
+where $p(\boldsymbol{x})$ is the probability that mushroom $\boldsymbol{x}$ is poisonous, 
+$K(\boldsymbol{x})$ is the set of the $k$ nearest training set observations to $\boldsymbol{x}$ in 
+the predictor space, and $y(\boldsymbol{x}_j)$ equals 1 or 0 (1 if mushroom $\boldsymbol{x}_j$ 
+is poisonous, 0 otherwise).
 
 ![](images/mushroom_classification/knn_grid_search.png){width="600"}
 /// caption
@@ -133,10 +139,25 @@ negatives (incorrectly predicted to be edible).
 
 ## Model Interpretation
 
-The Gini index measures the purity of a node in a decision tree. A smaller Gini
-value indicates higher purity. Each split in a decision tree decreases the Gini index of the
-children nodes relative to the parent node. Within a random forest, the larger the average 
-decrease in Gini index for all splits using predictor P, the more useful predictor P is.
+In a decision tree, a pure node is a node that only contains poisonous mushrooms, or 
+only contains edible mushrooms. The Gini index measures the purity of a node in a decision tree. 
+A smaller Gini index value indicates higher purity. 
+$$
+G(A) = 1 - [p_{\mathrm{poisonous}}^2(A) + p_{\mathrm{edible}}^2(A)]
+$$
+where $G(A)$ is the Gini index of node $A$, and $p_{\mathrm{poisonous}}(A)$ is the proportion of poisonous
+mushrooms in $A$.
+
+Splitting a node $A$ returns a left child node ($A_{\mathrm{left}}$) and a right child node ($A_{\mathrm{right}}$), 
+both of which have a smaller Gini index than $A$.
+$$
+\Delta G(A) = G(A) - [\frac{n(A_{\mathrm{left}})}{n(A)}G(A_{\mathrm{left}})+\frac{n(A_{\mathrm{right}})}{n(A)}G(A_{\mathrm{right}})]
+$$
+where $\Delta G(A)$ is the decrease in Gini index from splitting node $A$, and $n(A)$ is the number of 
+mushrooms in $A$.
+
+Within a random forest, the larger the average decrease in the Gini index for all 
+splits using predictor P, the more useful P is.
 
 ![](images/mushroom_classification/predictor_importances.png){width="600"}
 /// caption
