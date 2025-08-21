@@ -361,7 +361,7 @@ data = read.csv(&quot;mushrooms.csv&quot;)</code></pre>
 </div>
 <div id="convert-categorical-variables-to-factors" class="section level2">
 <h2>Convert categorical variables to factors</h2>
-<pre class="r"><code>for (predictor in names(new_name_to_old_name)) {
+<pre class="r"><code>for (predictor in colnames(data)) {
   data[,predictor] = as.factor(data[,predictor])
 }</code></pre>
 </div>
@@ -559,7 +559,8 @@ pred_probs = data.frame(
 )
 
 suppressMessages(library(pROC))
-# Function to calculate test set AUC of each classification model
+# Function to calculate test set AUC from the 
+# predicted probabilities of being poisonous
 get_AUC = function(pred_prob) {
   roc_obj &lt;- roc(
     response=y_test, 
@@ -570,6 +571,7 @@ get_AUC = function(pred_prob) {
   )
 }
 
+# Calculate the test set AUC fo each classification model
 aucs = apply(pred_probs, 2, get_AUC)
 sorted_aucs = sort(aucs, decreasing=TRUE)
 model_order = names(sorted_aucs)
@@ -603,12 +605,12 @@ random_f_model = randomForest(
   importance=TRUE
 )
 
-importance_random_f = as.data.frame(importance(random_f_model))
+# For each predictor P, calculate the average decrease in 
+# Gini index for all splits using P.
 importance_random_f = data.frame(
-  predictor = rownames(importance_random_f),
-  importance = importance_random_f$MeanDecreaseGini
+  predictor = rownames(importance(random_f_model)),
+  importance = as.data.frame(importance(random_f_model))$MeanDecreaseGini
 )
-
 sorted_importances = importance_random_f[
   order(importance_random_f$importance, decreasing = FALSE), 
 ]
