@@ -1,4 +1,6 @@
 # Predicting mushroom edibility using classification models
+
+## Summary
 ![](images/mushroom_classification/project_diagram.png){width="1000"}
 
 !!! abstract ""
