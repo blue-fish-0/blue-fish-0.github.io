@@ -13,10 +13,10 @@
 <font size="5"> :simple-r: [Link to R code](http://blue-fish-0.github.io/R_code_for_mushroom_edibility_classification_project.html){target="_blank"} </font>
 
 ## Dataset Description
-The dataset describes 1,000 mushrooms, each of which is either poisonous or edible. All of the 9 predictors are categorical, and are described in the table below.
+The dataset described 1,000 mushrooms, each of which was either poisonous or edible. All of the 9 predictors were categorical, and are described in the table below.
 
-| Categorical variable            | Type      | Categories                        |
-|                                 |           |                                   |
+| Variable                        | Type      | Categories     |
+|                                 |           |                |
 | <span style="background-color:#d8f5e6"> Edibility (target variable) </span> | <span style="background-color:#d8f5e6"> Binary </span>  | <span style="background-color:#d8f5e6"> edible, poisonous </span> |
 | Bruises                         | Binary    | bruises, no bruises |
 | Gill size                       | Binary    | broad, narrow |
@@ -32,8 +32,8 @@ The dataset describes 1,000 mushrooms, each of which is either poisonous or edib
 
 **Encoding categorical variables:** I converted each nominal variable into an unordered factor, and each ordinal variable into an ordered factor.
 
-**Train-test split:** I split the dataset into an 80% training set and a 20% test set. This is
-necessary because I want to estimate each model’s performance on data it was not trained
+**Train-test split:** I split the dataset into an 80% training set and a 20% test set. This was
+necessary because I wanted to estimate each model’s performance on data it was not trained
 on (the test set).
 
 ## Exploratory Data Analysis
@@ -56,6 +56,7 @@ Meanwhile, mushrooms with 0 rings, a narrow gill size, or a 'paths' habitat had 
 All the classification models had hyperparameters, which are parameters that
 control each model's complexity and that are set before model training. To approximate the 
 best hyperparameters, I used grid search, 5-fold cross-validation, and AUC (using the `caret` package). 
+
 For example, if I test 10 sets of hyperparameter values using 5-fold cross validation, 
 then I obtain 5 validation set AUC values for each set of hyperparameter 
 values. The best set of hyperparameter values has the highest average validation set AUC.
@@ -140,9 +141,9 @@ in the dataset is balanced. The best model has the largest AUC value (0.5 ≤ AU
 /// caption
 Test set AUCs for all classification models
 ///
-In the figure above, we observe that random forest and k-nn achieved 1.0 (perfect) test
+In the figure above, we observe that random forest and k-NN achieved 1.0 (perfect) test
 set AUCs. This means that for every poisonous mushroom in the test set, these models predicted 
-a higher probability of being poisonous than all the edible mushroom in the test set.
+a higher probability of being poisonous than for all the edible mushroom in the test set.
 
 ## Model Interpretation
 
