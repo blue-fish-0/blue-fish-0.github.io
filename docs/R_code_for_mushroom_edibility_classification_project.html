@@ -473,7 +473,7 @@ best_lambda = logistic_model$finalModel$tuneValue$lambda
 cat(&quot;The best \u03b1 value is&quot;, round(best_alpha, 2), 
     &quot;and the best \u03bb value is&quot;, round(best_lambda, 2))</code></pre>
 <pre><code>## The best α value is 0.05 and the best λ value is 0</code></pre>
-<pre class="r"><code># Plot the hyperparameter grid search heatmap
+<pre class="r"><code># Plot the logistic regression validation heatmap
 logistic_grid = logistic_model$results
 ggplot(logistic_grid, aes(alpha, lambda, fill= ROC)) +
   geom_tile() + 
@@ -502,7 +502,7 @@ random_f_model = train(
 best_mtry = random_f_model$finalModel$tuneValue$mtry
 cat(&quot;The best mtry value is&quot;, best_mtry)</code></pre>
 <pre><code>## The best mtry value is 9</code></pre>
-<pre class="r"><code># Plot the hyperparameter grid search graph
+<pre class="r"><code># Plot the random forest validation curve
 ggplot(random_f_model$results, aes(x=mtry, y=ROC)) +
   geom_errorbar(aes(ymin=ROC-ROCSD, ymax=ROC+ROCSD), width=.1) +
   geom_line() +
@@ -533,7 +533,7 @@ knn_model &lt;- train(
 best_k = knn_model$finalModel$tuneValue$k
 cat(&quot;The best k value is&quot;, best_k)</code></pre>
 <pre><code>## The best k value is 4</code></pre>
-<pre class="r"><code># Plot the hyperparameter grid search graph
+<pre class="r"><code># Plot the k-NN validation curve
 ggplot(knn_model$results, aes(x=k, y=ROC)) +
   geom_errorbar(aes(ymin=ROC-ROCSD, ymax=ROC+ROCSD), width=.1) +
   geom_line() +
