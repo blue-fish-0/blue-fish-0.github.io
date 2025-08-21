@@ -5,7 +5,6 @@ nav:
   - 'knime_etl.md'
   - 'power_bi_python.md'
   - 'classification_mushroom_edibility.md'
-  - 'R_code_for_mushroom_edibility_classification_project.html'
 
 theme:
     name: material
