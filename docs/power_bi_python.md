@@ -5,9 +5,9 @@
 ![](images/power_bi_python/project_diagram.png){width="500"}
 
 !!! abstract ""
-    :fontawesome-solid-triangle-exclamation: **Problem:** The analytics team needed to create hundreds of Power BI report pages, each presenting the result of a different database query. 
+    :fontawesome-solid-triangle-exclamation: **Problem:** My manager asked me to create hundreds of Power BI report pages, each presenting the result of a different database query. 
 
-    :material-lightbulb-on-10: **Solution:** I wrote a Python script to automate the creation of the Power BI report pages by editing the files in a Power BI Project folder. 
+    :material-lightbulb-on-10: **Solution:** I wrote a Python script to automate the creation of the Power BI report pages.
 
     :octicons-graph-16: **Results:** The Python script saved days of work for my team. Without the script, we would have had to manually create the report pages using the Power BI graphical user interface (GUI). 
 
@@ -81,6 +81,7 @@ new_table_name = "table_1"
 new_page_name = new_table_name
 ```
 <br>
+
 **2.** Extract the column names of each semantic model table from the `.tmdl` files. 
 
 ``` py title="add_pages_to_report.py"

@@ -5,11 +5,11 @@
 ![](images/knime_etl/project_diagram.png){width="1000"}
 
 !!! abstract ""
-    :fontawesome-solid-triangle-exclamation: **Problem:** Every week, the analytics team used Power Query to transform and import new sales and inventory data (stored in over 30 Excel files) into their Power BI reports. After a few years, the Power BI report data refreshes became very slow, because Power Query was transforming data from thousands of Excel files during each data refresh.
+    :fontawesome-solid-triangle-exclamation: **Problem:** Every week, the analytics team received new financial and inventory data stored in Excel files. Over time, the analytics team collected thousands of Excel files. To facilitate data analysis, my manager asked me to import the data from the Excel files into the company's database.  
 
-    :material-lightbulb-on-10: **Solution:** I used KNIME to develop an ETL program to extract the data from the Excel files, transform the data, then load the transformed data into SQL Server. This allowed the team to import the data from SQL Server instead of from thousands of Excel files.
+    :material-lightbulb-on-10: **Solution:** I used KNIME to develop an Extract, Transform, Load (ETL) program to extract the data from the Excel files, transform the data, then load the transformed data into SQL Server. Since many Excel files contained errors, I also implemented data quality tests to identify invalid data. 
 
-    :octicons-graph-16: **Results:** The Power BI report data refreshes became 80% faster.
+    :octicons-graph-16: **Results:** The analytics team can now access all of the company's financial and inventory data using the company's database, instead of searching through thousands of Excel files.
     
 
 ## KNIME
