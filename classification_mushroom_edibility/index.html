@@ -1,0 +1,851 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://sitename.example/classification_mushroom_edibility/">
+      
+      
+        <link rel="prev" href="../power_bi_python/">
+      
+      
+      
+      <link rel="icon" href="../images/fish.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
+    
+    
+      
+        <title>Predicting mushroom edibility using classification models - max ho portfolio</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.84d31ad4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#predicting-mushroom-edibility-using-classification-models" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="max ho portfolio" class="md-header__button md-logo" aria-label="max ho portfolio" data-md-component="logo">
+      
+  <img src="../images/fish.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            max ho portfolio
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Predicting mushroom edibility using classification models
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="max ho portfolio" class="md-nav__button md-logo" aria-label="max ho portfolio" data-md-component="logo">
+      
+  <img src="../images/fish.svg" alt="logo">
+
+    </a>
+    max ho portfolio
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../knime_etl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Importing Tilray's data into a database
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power_bi_python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Automating Tilray's administrative tasks using Python
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Predicting mushroom edibility using classification models
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Predicting mushroom edibility using classification models
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#r-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      R Code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataset-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dataset Description
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataset-preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dataset Preparation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploratory-data-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploratory Data Analysis
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hyperparameter-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hyperparameter Tuning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#classification-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Classification Models
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Classification Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logistic-regression" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logistic regression
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random-forest" class="md-nav__link">
+    <span class="md-ellipsis">
+      Random forest
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k-nn" class="md-nav__link">
+    <span class="md-ellipsis">
+      k-NN
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Evaluation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-interpretation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Interpretation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#r-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      R Code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataset-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dataset Description
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataset-preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dataset Preparation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploratory-data-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploratory Data Analysis
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hyperparameter-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hyperparameter Tuning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#classification-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Classification Models
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Classification Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logistic-regression" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logistic regression
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random-forest" class="md-nav__link">
+    <span class="md-ellipsis">
+      Random forest
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k-nn" class="md-nav__link">
+    <span class="md-ellipsis">
+      k-NN
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Evaluation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-interpretation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Interpretation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="predicting-mushroom-edibility-using-classification-models">Predicting mushroom edibility using classification models</h1>
+<h2 id="summary">Summary</h2>
+<p><img alt="" src="../images/mushroom_classification/project_diagram.png" width="1000" /></p>
+<div class="admonition abstract">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 0c14.7 0 28.2 8.1 35.2 21l216 400c6.7 12.4 6.4 27.4-.8 39.5S486.1 480 472 480H40c-14.1 0-27.2-7.4-34.4-19.5s-7.5-27.1-.8-39.5l216-400c7-12.9 20.5-21 35.2-21m0 352a32 32 0 1 0 0 64 32 32 0 1 0 0-64m0-192c-18.2 0-32.7 15.5-31.4 33.7l7.4 104c.9 12.5 11.4 22.3 23.9 22.3 12.6 0 23-9.7 23.9-22.3l7.4-104c1.3-18.2-13.1-33.7-31.4-33.7z"/></svg></span> <strong>Problem:</strong> I wanted to predict whether a mushroom is edible using its physical characteristics.</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M1 11h3v2H1zm18.1-7.5L17 5.6 18.4 7l2.1-2.1zM11 1h2v3h-2zM4.9 3.5 3.5 4.9 5.6 7 7 5.6zM10 22c0 .6.4 1 1 1h2c.6 0 1-.4 1-1v-1h-4zm2-16c-3.3 0-6 2.7-6 6 0 2.2 1.2 4.2 3 5.2V19c0 .6.4 1 1 1h4c.6 0 1-.4 1-1v-1.8c1.8-1 3-3 3-5.2 0-3.3-2.7-6-6-6m1 9.9V17h-2v-1.1c-1.7-.4-3-2-3-3.9 0-2.2 1.8-4 4-4s4 1.8 4 4c0 1.9-1.3 3.4-3 3.9m7-4.9h3v2h-3z"/></svg></span> <strong>Solution:</strong> I trained several binary classification models (logistic regression, random forest, and k-NN) to predict mushroom edibility. I used AUC to compare the models. I also used random forest to identify the most useful predictors.</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.5 1.75V13.5h13.75a.75.75 0 0 1 0 1.5H.75a.75.75 0 0 1-.75-.75V1.75a.75.75 0 0 1 1.5 0m14.28 2.53-5.25 5.25a.75.75 0 0 1-1.06 0L7 7.06 4.28 9.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.25-3.25a.75.75 0 0 1 1.06 0L10 7.94l4.72-4.72a.75.75 0 0 1 1.042.018.75.75 0 0 1 .018 1.042"/></svg></span> <strong>Results:</strong> The best models were random forest and k-NN, which both achieved a 1.0 (perfect) test set AUC. The most useful predictors were gill size, gill spacing, and habitat.</p>
+</div>
+<h2 id="r-code">R Code</h2>
+<p><font size="5"> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.746c-6.627 0-12 3.599-12 8.037 0 3.897 4.144 7.144 9.64 7.88V16.26c-2.924-.915-4.925-2.755-4.925-4.877 0-3.035 4.084-5.494 9.12-5.494 5.038 0 8.757 1.683 8.757 5.494 0 1.976-.999 3.379-2.662 4.272.09.066.174.128.258.216.169.149.25.363.372.544 2.128-1.45 3.44-3.437 3.44-5.631 0-4.44-5.373-8.038-12-8.038m-2.111 4.99v13.516l4.093-.002-.002-5.291h1.1c.225 0 .321.066.549.25.272.22.715.982.715.982l2.164 4.063 4.627-.002-2.864-4.826s-.086-.193-.265-.383a2.2 2.2 0 0 0-.582-.416c-.422-.214-1.149-.434-1.149-.434s3.578-.264 3.578-3.826-3.744-3.63-3.744-3.63zm4.127 2.93 2.478.002s1.149-.062 1.149 1.127c0 1.165-1.149 1.17-1.149 1.17h-2.478zm1.754 6.119c-.494.049-1.012.079-1.54.088v1.807a17 17 0 0 0 2.37-.473l-.471-.891s-.108-.183-.248-.394c-.039-.054-.08-.098-.111-.137"/></svg></span> <a href="http://blue-fish-0.github.io/code/classification_mushroom_edibility.html" target="_blank">Link to R code</a> </font></p>
+<h2 id="dataset-description">Dataset Description</h2>
+<p>The dataset described 1,000 mushrooms, each of which was either poisonous or edible. All of the 9 predictors were categorical, and are described in the table below.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Type</th>
+<th>Categories</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span style="background-color:#d8f5e6"> Edibility (target variable) </span></td>
+<td><span style="background-color:#d8f5e6"> Binary </span></td>
+<td><span style="background-color:#d8f5e6"> edible, poisonous </span></td>
+</tr>
+<tr>
+<td>Bruises</td>
+<td>Binary</td>
+<td>bruises, no bruises</td>
+</tr>
+<tr>
+<td>Gill size</td>
+<td>Binary</td>
+<td>broad, narrow</td>
+</tr>
+<tr>
+<td>Stalk shape</td>
+<td>Binary</td>
+<td>enlarging, tapering</td>
+</tr>
+<tr>
+<td>Cap surface</td>
+<td>Nominal</td>
+<td>fibrous, grooves, scaly, smooth</td>
+</tr>
+<tr>
+<td>Gill attachment</td>
+<td>Nominal</td>
+<td>attached, descending, free, notched</td>
+</tr>
+<tr>
+<td>Habitat</td>
+<td>Nominal</td>
+<td>grasses, leaves, meadows, paths, urban, waste, woods</td>
+</tr>
+<tr>
+<td>Veil color</td>
+<td>Nominal</td>
+<td>brown, orange, white, yellow</td>
+</tr>
+<tr>
+<td>Gill spacing</td>
+<td>Ordinal</td>
+<td>crowded, close, distant</td>
+</tr>
+<tr>
+<td>Number of rings</td>
+<td>Ordinal</td>
+<td>zero, one, two</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dataset-preparation">Dataset Preparation</h2>
+<p><strong>Encoding categorical variables:</strong> I converted each nominal variable into an unordered factor, and each ordinal variable into an ordered factor.</p>
+<p><strong>Train-test split:</strong> I split the dataset into an 80% training set and a 20% test set. This was
+necessary because I wanted to estimate each model’s performance on data it was not trained
+on (the test set).</p>
+<h2 id="exploratory-data-analysis">Exploratory Data Analysis</h2>
+<p><strong>Target variable distribution:</strong> In the dataset, 50% of the mushrooms were poisonous and the 
+remaining 50% were edible. </p>
+<p><strong>Predictor-target distributions:</strong> </p>
+<figure>
+<p><img alt="" src="../images/mushroom_classification/poisonous_proportions.png" width="1000" /></p>
+<figcaption>
+<p>Proportion of poisonous mushrooms within each category of each predictor</p>
+</figcaption>
+</figure>
+<p>In the figure above, we see that all mushrooms with a 'waste' habitat, an orange veil color, or a brown veil color were edible.  </p>
+<p>Meanwhile, mushrooms with 0 rings, a narrow gill size, or a 'paths' habitat had the largest proportion of poisonous mushrooms.</p>
+<h2 id="hyperparameter-tuning">Hyperparameter Tuning</h2>
+<p>All the classification models had hyperparameters, which are parameters that
+control each model's complexity and that are set before model training. To approximate the 
+best hyperparameters, I used grid search, 5-fold cross-validation, and AUC (using the <code>caret</code> package). </p>
+<p>For example, if I test 10 sets of hyperparameter values using 5-fold cross validation, 
+then I obtain 5 validation set AUC values for each set of hyperparameter 
+values. The best set of hyperparameter values has the highest average validation set AUC.</p>
+<figure>
+<p><img alt="" src="../images/mushroom_classification/grid_search.png" width="1000" /></p>
+<figcaption>
+<p><span class="arithmatex">\(M_i(h_j)\)</span> is the value of the validation set evaluation metric for the <span class="arithmatex">\(j\)</span>th set of hyperparameter 
+values and the <span class="arithmatex">\(i\)</span>th cross-validation iteration.</p>
+</figcaption>
+</figure>
+<h2 id="classification-models">Classification Models</h2>
+<h3 id="logistic-regression">Logistic regression</h3>
+<p>Logistic regression assumes a linear relationship between the log odds of
+a mushroom being poisonous and the predictors. It can handle categorical predictors using one-hot
+encoding. 
+$$
+\log(\frac{p(\boldsymbol{x})}{1-p(\boldsymbol{x})}) = \beta_0 + \beta_1 x_1 + \ldots + \beta_q x_q
+$$
+where <span class="arithmatex">\(p(\boldsymbol{x})\)</span> is the probability that mushroom <span class="arithmatex">\(\boldsymbol{x}\)</span> is poisonous, and <span class="arithmatex">\(x_i\)</span> equals 1 or 0 (1 if mushroom <span class="arithmatex">\(\boldsymbol{x}\)</span> belongs to predictor category <span class="arithmatex">\(i\)</span>, 0 otherwise).</p>
+<p>The coefficients <span class="arithmatex">\(\boldsymbol{\beta}\)</span> are calculated by minimizing the objective function. I used elastic-net regularization to prevent overfitting. Elastic-net adds a lasso penalty term and a ridge penalty term to the objective function, which limit the magnitudes of the coefficients.
+$$
+\underset{\boldsymbol{\beta}}{\mathrm{argmin}}(\mathrm{RSS} + \lambda\sum_{j=1}^{q}[\alpha \beta_j^2 + (1 - \alpha) |\beta_j|])
+$$
+where <span class="arithmatex">\(\mathrm{RSS}\)</span> is the residual sum of squares, <span class="arithmatex">\(\lambda\)</span> is a hyperparameter that
+controls the amount of regularization, and <span class="arithmatex">\(\alpha\)</span> is a hyperparameter that balances the amounts 
+of ridge and lasso regularization.</p>
+<figure>
+<p><img alt="" src="../images/mushroom_classification/logistic_regression_grid_search.png" width="600" /></p>
+<figcaption>
+<p>Logistic regression validation heatmap (the best hyperparameter values were <span class="arithmatex">\(\lambda\)</span> = 0 and <span class="arithmatex">\(\alpha\)</span> = 0.05)</p>
+</figcaption>
+</figure>
+<p>In the figure above, we see that logistic regression models with a large <span class="arithmatex">\(\alpha\)</span> 
+and a large <span class="arithmatex">\(\lambda\)</span> have a low average validation set AUC because they underfit the data. 
+This is because a larger <span class="arithmatex">\(\alpha\)</span> removes more predictors (more lasso regularization) and a larger <span class="arithmatex">\(\lambda\)</span> 
+penalizes the coefficient magnitudes more.</p>
+<h3 id="random-forest">Random forest</h3>
+<p>A classification tree splits the predictor space into regions using recursive binary splitting, then assigns a predicted class (poisonous or edible) for all mushrooms in each new region. </p>
+<p>Since a single classification tree has high variance, a random forest returns the average of a set of classification trees, where each tree is trained on a bootstrap sample of the training set. To decrease the correlation between the trees, each split considers a different random subset <span class="arithmatex">\(S\)</span> of the predictors. The <span class="arithmatex">\(\mathrm{mtry}\)</span> hyperparameter controls the size of <span class="arithmatex">\(S\)</span>. 
+$$
+p(\boldsymbol{x}) = \frac{1}{B}\sum_{b=1}^{B}\hat{y}^b(\boldsymbol{x})
+$$
+where <span class="arithmatex">\(p(\boldsymbol{x})\)</span> is the probability that mushroom <span class="arithmatex">\(\boldsymbol{x}\)</span> is poisonous, <span class="arithmatex">\(B\)</span> is the number of trees, and <span class="arithmatex">\(\hat{y}^b(\boldsymbol{x})\)</span> equals 1 or 0 (1 if the classification tree trained on bootstrap sample <span class="arithmatex">\(b\)</span> predicts  <span class="arithmatex">\(\boldsymbol{x}\)</span> to be poisonous, 0 otherwise).</p>
+<figure>
+<p><img alt="" src="../images/mushroom_classification/random_forest_grid_search.png" width="600" /></p>
+<figcaption>
+<p>Random forest validation curve (the best hyperparameter value was <span class="arithmatex">\(\mathrm{mtry}\)</span> = 9)</p>
+</figcaption>
+</figure>
+<h3 id="k-nn">k-NN</h3>
+<p>k-Nearest Neighbors (k-NN) is a non-parametric method, meaning it makes no
+assumptions about the shape of the decision boundary in the predictor space. 
+k-NN classifies each mushroom <span class="arithmatex">\(\boldsymbol{x}\)</span> using the edibilities of the <span class="arithmatex">\(k\)</span> nearest 
+training set mushrooms to <span class="arithmatex">\(\boldsymbol{x}\)</span> in the predictor space. <span class="arithmatex">\(k\)</span> is a hyperparameter.</p>
+<p>$$
+p(\boldsymbol{x}) = \frac{1}{k}\sum_{\boldsymbol{x}_j\in K(\boldsymbol{x})}^{} y(\boldsymbol{x}_j)
+$$
+where <span class="arithmatex">\(p(\boldsymbol{x})\)</span> is the probability that mushroom <span class="arithmatex">\(\boldsymbol{x}\)</span> is poisonous, 
+<span class="arithmatex">\(K(\boldsymbol{x})\)</span> is the set of the <span class="arithmatex">\(k\)</span> nearest training set observations to <span class="arithmatex">\(\boldsymbol{x}\)</span> in 
+the predictor space, and <span class="arithmatex">\(y(\boldsymbol{x}_j)\)</span> equals 1 or 0 (1 if mushroom <span class="arithmatex">\(\boldsymbol{x}_j\)</span> 
+is poisonous, 0 otherwise).</p>
+<figure>
+<p><img alt="" src="../images/mushroom_classification/knn_grid_search.png" width="600" /></p>
+<figcaption>
+<p>k-nearest neighbors validation curve (the best hyperparameter value was <span class="arithmatex">\(k\)</span> = 4)</p>
+</figcaption>
+</figure>
+<p>In the figure above, we see that k-NN models with a large <span class="arithmatex">\(k\)</span> have a low average validation set 
+AUC because they underfit the data. This is because a larger <span class="arithmatex">\(k\)</span> creates a smoother decision boundary.</p>
+<h2 id="model-evaluation">Model Evaluation</h2>
+<p>To compare the models across all probability thresholds, I used their AUC
+(Area Under Curve) values. We can use AUC because the distribution of the target variable 
+in the dataset is balanced. The best model has the largest AUC value (0.5 ≤ AUC ≤ 1).</p>
+<figure>
+<p><img alt="" src="../images/mushroom_classification/test_set_AUCs.png" width="600" /></p>
+<figcaption>
+<p>Test set AUCs for all classification models</p>
+</figcaption>
+</figure>
+<p>In the figure above, we observe that random forest and k-NN achieved 1.0 (perfect) test
+set AUCs. This means that for every poisonous mushroom in the test set, these models predicted 
+a higher probability of being poisonous than for all the edible mushroom in the test set.</p>
+<h2 id="model-interpretation">Model Interpretation</h2>
+<p>In a classification tree, a pure node is a node that only contains poisonous mushrooms, or 
+only contains edible mushrooms. The Gini index measures the purity of a node in a classification tree. 
+A smaller Gini index value indicates higher purity. 
+$$
+G(A) = 1 - [p_{\mathrm{poisonous}}^2(A) + p_{\mathrm{edible}}^2(A)]
+$$
+where <span class="arithmatex">\(G(A)\)</span> is the Gini index of node <span class="arithmatex">\(A\)</span>, and <span class="arithmatex">\(p_{\mathrm{poisonous}}(A)\)</span> is the proportion of poisonous
+mushrooms in <span class="arithmatex">\(A\)</span>.</p>
+<p>Splitting a node <span class="arithmatex">\(A\)</span> returns a left child node (<span class="arithmatex">\(A_{\mathrm{left}}\)</span>) and a right child node (<span class="arithmatex">\(A_{\mathrm{right}}\)</span>), 
+both of which have a smaller Gini index than <span class="arithmatex">\(A\)</span>.
+$$
+\Delta G(A) = G(A) - [\frac{n(A_{\mathrm{left}})}{n(A)}G(A_{\mathrm{left}})+\frac{n(A_{\mathrm{right}})}{n(A)}G(A_{\mathrm{right}})]
+$$
+where <span class="arithmatex">\(\Delta G(A)\)</span> is the decrease in Gini index from splitting node <span class="arithmatex">\(A\)</span>, and <span class="arithmatex">\(n(A)\)</span> is the number of 
+mushrooms in <span class="arithmatex">\(A\)</span>.</p>
+<p>Within a random forest, the larger the average decrease in the Gini index for all 
+splits using predictor P, the more useful P is.</p>
+<figure>
+<p><img alt="" src="../images/mushroom_classification/predictor_importances.png" width="600" /></p>
+<figcaption>
+<p>Random forest predictor importances of the five most important predictors </p>
+</figcaption>
+</figure>
+<h2 id="conclusion">Conclusion</h2>
+<p>The best models were random forest and k-NN, which both achieved a 1.0 (perfect) test set AUC. The most useful predictors were gill size, gill spacing, and habitat.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
