@@ -1,4 +1,4 @@
-# Creating Tilray's Power BI reports using Python
+# Automating Tilray's administrative tasks using Python
 
 ## Summary
 

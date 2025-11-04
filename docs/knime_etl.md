@@ -1,4 +1,4 @@
-# Automating Tilray's weekly ETL using KNIME and SQL Server
+# Importing Tilray's data into a database
 
 ## Summary
 
